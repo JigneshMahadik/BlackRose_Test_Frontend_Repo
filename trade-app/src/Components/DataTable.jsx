@@ -12,7 +12,7 @@ const DataTable = () => {
   // Fetch all data from the backend
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/data");
+      const response = await axios.get("https://blackrose-test-backend-repo.onrender.com/data");
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -22,7 +22,7 @@ const DataTable = () => {
   // Delete a record
   const deleteRecord = async (user) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/data/${user}`);
+      await axios.delete(`https://blackrose-test-backend-repo.onrender.com/data/${user}`);
       alert(`Record for user '${user}' deleted successfully`);
       fetchData(); // Refresh data after deletion
     } catch (error) {
@@ -34,7 +34,7 @@ const DataTable = () => {
   // Update a specific field for a user
   const updateData = async (user, field, value) => {
     try {
-      await axios.put("http://127.0.0.1:8000/data", {
+      await axios.put("https://blackrose-test-backend-repo.onrender.com/data", {
         user: user,
         field: field,
         value: value,
@@ -50,7 +50,7 @@ const DataTable = () => {
   // Add a new record
   const addRecord = async () => {
     try {
-      await axios.post("http://127.0.0.1:8000/data", newRecord);
+      await axios.post("https://blackrose-test-backend-repo.onrender.com/data", newRecord);
       alert("New record added successfully");
       fetchData(); // Refresh data after adding
       setShowAddForm(false); // Close the form
