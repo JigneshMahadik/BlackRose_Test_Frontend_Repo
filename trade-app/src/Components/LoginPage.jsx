@@ -14,7 +14,7 @@ const LoginPage = () => {
     setError(""); // Clear any previous error messages
 
     try {
-      const response = await axios.post("http://localhost:8000/login", {
+      const response = await axios.post("https://blackrose-test-backend-repo.onrender.com/login", {
         username,
         password,
       });
