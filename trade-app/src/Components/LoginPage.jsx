@@ -18,7 +18,6 @@ const LoginPage = () => {
         username,
         password,
       });
-      // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNzM2NTk0NjUwfQ.OHXXhoL4KJt_j2A_0Ckj0EBTImMX1OmAmFCoMzq7vF8
       
       // Ensure the token is available in the response
       if (response.data?.token) {
