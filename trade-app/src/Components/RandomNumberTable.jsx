@@ -12,7 +12,7 @@ const RandomNumberTable = () => {
     // Fetch the random numbers on component mount
     const fetchRandomNumbers = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/random-numbers");
+        const response = await axios.get("https://blackrose-test-backend-repo.onrender.com/random-numbers");
         setNumbers(response.data); // Assuming the API returns an array of numbers
       } catch (err) {
         setError("Failed to fetch random numbers");
