@@ -12,7 +12,7 @@ const RandomNumberGenerator = () => {
   const [dataIndices, setDataIndices] = useState([]);  // Store indices for x-axis labels
 
   useEffect(() => {
-    const ws = new WebSocket("ws://https://blackrose-test-backend-repo.onrender.com/ws/random");
+    const ws = new WebSocket("wss://https://blackrose-test-backend-repo.onrender.com/ws/random");
     const token = localStorage.getItem("token"); // Retrieve token from localStorage
 
     ws.onopen = () => {
