@@ -26,17 +26,19 @@ const RandomNumberGenerator = () => {
     };
 
     ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.error) {
-        console.error(data.error);
-        ws.close(); // Close the connection on token error
-      } else {
-        const randomNumber = data.random_number;
-        setRandomNumber(`Random Number: ${randomNumber}`);
-        setDataPoints((prevData) => [...prevData, randomNumber]);
-        setDataIndices((prevIndices) => [...prevIndices, prevIndices.length]);
-      }
-    };
+    const data = JSON.parse(event.data);
+    if (data.error) {
+      console.error("Server Error:", data.error);
+      setRandomNumber("Error: Invalid token");
+      ws.close(); // Close the connection on error
+    } else {
+      const randomNumber = data.random_number;
+      setRandomNumber(`Random Number: ${randomNumber}`);
+      setDataPoints((prevData) => [...prevData, randomNumber]);
+      setDataIndices((prevIndices) => [...prevIndices, prevIndices.length]);
+    }
+  };
+
 
     ws.onerror = (error) => {
       console.error("WebSocket Error: ", error);
