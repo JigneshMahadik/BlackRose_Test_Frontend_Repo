@@ -17,7 +17,8 @@ const RandomNumberGenerator = () => {
 
     ws.onopen = () => {
       if (token) {
-        ws.send(token); // Send token to server upon WebSocket connection
+         const message = JSON.stringify({ token }); // Send token as a JSON object
+        ws.send(message); // Send token to server upon WebSocket connection
       } else {
         console.error("No token available");
         ws.close();
