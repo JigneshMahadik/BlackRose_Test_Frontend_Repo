@@ -14,11 +14,11 @@ const RandomNumberGenerator = () => {
   useEffect(() => {
     const ws = new WebSocket("wss://blackrose-test-backend-repo.onrender.com/ws/random");
     const token = localStorage.getItem("token"); // Retrieve token from localStorage
-  
+
     ws.onopen = () => {
       if (token) {
-        const message = JSON.stringify({ token }); // Send token as JSON
-        ws.send(message);
+         const message = JSON.stringify({ token }); // Send token as a JSON object
+        ws.send(message); // Send token to server upon WebSocket connection
       } else {
         console.error("No token available");
         ws.close();
@@ -26,19 +26,17 @@ const RandomNumberGenerator = () => {
     };
 
     ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    if (data.error) {
-      console.error("Server Error:", data.error);
-      setRandomNumber("Error: Invalid token");
-      ws.close(); // Close the connection on error
-    } else {
-      const randomNumber = data.random_number;
-      setRandomNumber(`Random Number: ${randomNumber}`);
-      setDataPoints((prevData) => [...prevData, randomNumber]);
-      setDataIndices((prevIndices) => [...prevIndices, prevIndices.length]);
-    }
-  };
-
+      const data = JSON.parse(event.data);
+      if (data.error) {
+        console.error(data.error);
+        ws.close(); // Close the connection on token error
+      } else {
+        const randomNumber = data.random_number;
+        setRandomNumber(`Random Number: ${randomNumber}`);
+        setDataPoints((prevData) => [...prevData, randomNumber]);
+        setDataIndices((prevIndices) => [...prevIndices, prevIndices.length]);
+      }
+    };
 
     ws.onerror = (error) => {
       console.error("WebSocket Error: ", error);
