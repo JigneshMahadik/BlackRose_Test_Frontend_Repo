@@ -14,11 +14,11 @@ const RandomNumberGenerator = () => {
   useEffect(() => {
     const ws = new WebSocket("wss://blackrose-test-backend-repo.onrender.com/ws/random");
     const token = localStorage.getItem("token"); // Retrieve token from localStorage
-
+  
     ws.onopen = () => {
       if (token) {
-         const message = JSON.stringify({ token }); // Send token as a JSON object
-        ws.send(message); // Send token to server upon WebSocket connection
+        const message = JSON.stringify({ token }); // Send token as JSON
+        ws.send(message);
       } else {
         console.error("No token available");
         ws.close();
