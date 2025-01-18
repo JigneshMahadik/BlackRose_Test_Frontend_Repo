@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, LogarithmicScale } from "chart.js";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  LogarithmicScale,
+} from "chart.js";
 import DataTable from "./DataTable";
 import RandomNumberTable from "./RandomNumberTable";
 
@@ -8,8 +18,8 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const RandomNumberGenerator = () => {
   const [randomNumber, setRandomNumber] = useState("Waiting for random numbers...");
-  const [dataPoints, setDataPoints] = useState([]);  // Store random numbers
-  const [dataIndices, setDataIndices] = useState([]);  // Store indices for x-axis labels
+  const [dataPoints, setDataPoints] = useState([]);
+  const [dataIndices, setDataIndices] = useState([]);
 
   useEffect(() => {
     const ws = new WebSocket("wss://blackrose-test-backend-repo.onrender.com/ws/random");
@@ -17,8 +27,7 @@ const RandomNumberGenerator = () => {
 
     ws.onopen = () => {
       if (token) {
-         const message = JSON.stringify({ token }); // Send token as a JSON object
-        ws.send(message); // Send token to server upon WebSocket connection
+        ws.send(token); // Send token as plain text
       } else {
         console.error("No token available");
         ws.close();
@@ -55,7 +64,7 @@ const RandomNumberGenerator = () => {
     labels: dataIndices,
     datasets: [
       {
-        label: "Stock Price Chart",
+        label: "Random Numbers",
         data: dataPoints,
         borderColor: "rgb(75, 192, 192)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -67,15 +76,10 @@ const RandomNumberGenerator = () => {
   const options = {
     scales: {
       y: {
-        type: "logarithmic",
-        ticks: {
-          callback: function (value) {
-            return value.toString();
-          },
-        },
+        type: "linear",
         title: {
           display: true,
-          text: "Stock Price (INR)",
+          text: "Random Numbers",
         },
       },
     },
@@ -83,17 +87,17 @@ const RandomNumberGenerator = () => {
     plugins: {
       title: {
         display: true,
+        text: "Live Random Number Chart",
       },
     },
   };
 
   return (
     <div>
-      <h1>Tata Technologies - Stock</h1>
-      <Line data={data} options={options} style={{ backgroundColor: "white" }}/>
-      <br></br>
+      <h1>Random Number Generator</h1>
+      <Line data={data} options={options} style={{ backgroundColor: "white" }} />
+      <p>{randomNumber}</p>
       <RandomNumberTable />
-      <br></br>
       <DataTable />
     </div>
   );
