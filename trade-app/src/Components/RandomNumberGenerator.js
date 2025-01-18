@@ -27,12 +27,13 @@ const RandomNumberGenerator = () => {
 
     ws.onopen = () => {
       if (token) {
-        ws.send(token); // Send token as plain text
+        ws.send(JSON.stringify({ token })); // Send token as a JSON object
       } else {
         console.error("No token available");
         ws.close();
       }
     };
+
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
