@@ -36,8 +36,8 @@ const RandomNumberGenerator = () => {
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log("test is : ",data);
       if (data.error) {
+        console.log("test is : ",data);
         console.error(data.error);
         ws.close(); // Close the connection on token error
       } else {
