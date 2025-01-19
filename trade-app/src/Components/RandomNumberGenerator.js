@@ -9,9 +9,12 @@ import {
   Title,
   Tooltip,
   Legend,
+  LogarithmicScale,
 } from "chart.js";
+import DataTable from "./DataTable";
+import RandomNumberTable from "./RandomNumberTable";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, LogarithmicScale);
 
 const RandomNumberGenerator = () => {
   const [randomNumber, setRandomNumber] = useState("Waiting for random numbers...");
@@ -20,7 +23,7 @@ const RandomNumberGenerator = () => {
 
   useEffect(() => {
     const ws = new WebSocket("wss://blackrose-test-backend-repo.onrender.com/ws/random");
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token"); // Retrieve token from localStorage
 
     ws.onopen = () => {
       if (token) {
@@ -31,16 +34,17 @@ const RandomNumberGenerator = () => {
       }
     };
 
+
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.error) {
         console.error(data.error);
-        ws.close(); // Close the connection on error
+        ws.close(); // Close the connection on token error
       } else {
         const randomNumber = data.random_number;
         setRandomNumber(`Random Number: ${randomNumber}`);
-        setDataPoints((prevData) => [...prevData, randomNumber]); // Append new random number
-        setDataIndices((prevIndices) => [...prevIndices, prevIndices.length + 1]); // Increment indices
+        setDataPoints((prevData) => [...prevData, randomNumber]);
+        setDataIndices((prevIndices) => [...prevIndices, prevIndices.length]);
       }
     };
 
@@ -58,16 +62,14 @@ const RandomNumberGenerator = () => {
   }, []);
 
   const data = {
-    labels: dataIndices, // x-axis labels
+    labels: dataIndices,
     datasets: [
       {
         label: "Random Numbers",
-        data: dataPoints, // y-axis data
+        data: dataPoints,
         borderColor: "rgb(75, 192, 192)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderWidth: 2,
-        pointRadius: 3,
-        tension: 0.4, // Smooth curve
+        fill: false,
       },
     ],
   };
@@ -75,15 +77,10 @@ const RandomNumberGenerator = () => {
   const options = {
     scales: {
       y: {
+        type: "linear",
         title: {
           display: true,
           text: "Random Numbers",
-        },
-      },
-      x: {
-        title: {
-          display: true,
-          text: "Sequence",
         },
       },
     },
@@ -101,6 +98,8 @@ const RandomNumberGenerator = () => {
       <h1>Random Number Generator</h1>
       <Line data={data} options={options} style={{ backgroundColor: "white" }} />
       <p>{randomNumber}</p>
+      <RandomNumberTable />
+      <DataTable />
     </div>
   );
 };
