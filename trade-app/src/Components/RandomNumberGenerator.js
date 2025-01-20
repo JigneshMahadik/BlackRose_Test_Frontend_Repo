@@ -23,7 +23,9 @@ const RandomNumberGenerator = () => {
 
   useEffect(() => {
     const ws = new WebSocket("wss://blackrose-test-backend-repo.onrender.com/ws/random");
+    console.log("ws is : ",ws);
     const token = localStorage.getItem("token"); // Retrieve token from localStorage
+    console.log("token is : ",token)
 
     ws.onopen = () => {
       if (token) {
@@ -37,6 +39,7 @@ const RandomNumberGenerator = () => {
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
+      console.log("data is : ",data)
       if (data.error) {
         console.error(data.error);
         ws.close(); // Close the connection on token error
