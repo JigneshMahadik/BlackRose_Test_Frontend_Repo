@@ -20,12 +20,12 @@ const RandomNumberGenerator = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const ws = new WebSocket("wss://your-backend-url/ws/random");
+    const ws = new WebSocket("wss://your-backend-url/ws/stream-random"); // Update the URL to match your backend
     const token = localStorage.getItem("token");
 
     ws.onopen = () => {
       if (token) {
-        ws.send(JSON.stringify({ token }));
+        ws.send(token); // Send token as the first message
       } else {
         setError("Token not found. Please log in.");
         ws.close();
@@ -34,11 +34,14 @@ const RandomNumberGenerator = () => {
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
+
       if (data.error) {
         setError(data.error);
         ws.close();
       } else {
         const { random_number, timestamp } = data;
+
+        // Update state with new data
         setRandomNumber(`Random Number: ${random_number} at ${timestamp}`);
         setDataPoints((prev) => [...prev, random_number]);
         setDataIndices((prev) => [...prev, prev.length]);
@@ -53,6 +56,7 @@ const RandomNumberGenerator = () => {
       console.log("WebSocket connection closed.");
     };
 
+    // Cleanup WebSocket connection on component unmount
     return () => ws.close();
   }, []);
 
