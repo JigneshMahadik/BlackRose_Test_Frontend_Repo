@@ -9,59 +9,51 @@ import {
   Title,
   Tooltip,
   Legend,
-  LogarithmicScale,
 } from "chart.js";
-import DataTable from "./DataTable";
-import RandomNumberTable from "./RandomNumberTable";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, LogarithmicScale);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const RandomNumberGenerator = () => {
   const [randomNumber, setRandomNumber] = useState("Waiting for random numbers...");
   const [dataPoints, setDataPoints] = useState([]);
   const [dataIndices, setDataIndices] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const ws = new WebSocket("wss://blackrose-test-backend-repo.onrender.com/ws/random");
-    console.log("ws is : ",ws);
-    const token = localStorage.getItem("token"); // Retrieve token from localStorage
-    console.log("token is : ",token)
+    const ws = new WebSocket("wss://your-backend-url/ws/random");
+    const token = localStorage.getItem("token");
 
     ws.onopen = () => {
       if (token) {
-        ws.send(JSON.stringify({ token })); // Send token as a JSON object
+        ws.send(JSON.stringify({ token }));
       } else {
-        console.error("No token available");
+        setError("Token not found. Please log in.");
         ws.close();
       }
     };
 
-
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log("data is : ",data)
       if (data.error) {
-        console.error(data.error);
-        ws.close(); // Close the connection on token error
+        setError(data.error);
+        ws.close();
       } else {
-        const randomNumber = data.random_number;
-        setRandomNumber(`Random Number: ${randomNumber}`);
-        setDataPoints((prevData) => [...prevData, randomNumber]);
-        setDataIndices((prevIndices) => [...prevIndices, prevIndices.length]);
+        const { random_number, timestamp } = data;
+        setRandomNumber(`Random Number: ${random_number} at ${timestamp}`);
+        setDataPoints((prev) => [...prev, random_number]);
+        setDataIndices((prev) => [...prev, prev.length]);
       }
     };
 
-    ws.onerror = (error) => {
-      console.error("WebSocket Error: ", error);
+    ws.onerror = () => {
+      setError("WebSocket error occurred.");
     };
 
     ws.onclose = () => {
-      console.log("WebSocket connection closed");
+      console.log("WebSocket connection closed.");
     };
 
-    return () => {
-      ws.close();
-    };
+    return () => ws.close();
   }, []);
 
   const data = {
@@ -72,37 +64,23 @@ const RandomNumberGenerator = () => {
         data: dataPoints,
         borderColor: "rgb(75, 192, 192)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
-        fill: false,
       },
     ],
   };
 
   const options = {
-    scales: {
-      y: {
-        type: "linear",
-        title: {
-          display: true,
-          text: "Random Numbers",
-        },
-      },
-    },
     responsive: true,
     plugins: {
-      title: {
-        display: true,
-        text: "Live Random Number Chart",
-      },
+      title: { display: true, text: "Live Random Number Chart" },
     },
   };
 
   return (
     <div>
       <h1>Random Number Generator</h1>
-      <Line data={data} options={options} style={{ backgroundColor: "white" }} />
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      <Line data={data} options={options} />
       <p>{randomNumber}</p>
-      <RandomNumberTable />
-      <DataTable />
     </div>
   );
 };
