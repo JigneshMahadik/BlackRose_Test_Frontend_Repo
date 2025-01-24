@@ -20,7 +20,7 @@ const RandomNumberGenerator = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const ws = new WebSocket("wss://your-backend-url/ws/stream-random"); // Update the URL to match your backend
+    const ws = new WebSocket("wss://blackrose-test-backend-repo.onrender.com/ws/random");
     const token = localStorage.getItem("token");
 
     ws.onopen = () => {
