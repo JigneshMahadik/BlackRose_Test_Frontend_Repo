@@ -4,13 +4,13 @@ This is the frontend of a full-stack application that provides real-time data vi
 
 **## Tech Stack**
 
-React (Frontend Framework)
-Chart.js (Real-time data visualization)
-React Router (Routing)
-Axios (HTTP client)
-State management
-Tailwind CSS (Styling)
-Vercel (Hosting)
+-React (Frontend Framework)
+-Chart.js (Real-time data visualization)
+-React Router (Routing)
+-Axios (HTTP client)
+-State management
+-Tailwind CSS (Styling)
+-Vercel (Hosting)
 
 **## Core Features**
 
