@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
+import DataTable from "./DataTable";
+import RandomNumberTable from "./RandomNumberTable";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -84,7 +87,10 @@ const RandomNumberGenerator = () => {
       <h1>Random Number Generator</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <Line data={data} options={options} />
-      <p>{randomNumber}</p>
+      <br></br>
+      <RandomNumberTable />
+      <br></br>
+      <DataTable />
     </div>
   );
 };
