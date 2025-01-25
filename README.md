@@ -1,5 +1,5 @@
 **## Hosted URL : **
--https://black-rose-frontend.vercel.app/
+https://black-rose-frontend.vercel.app/
 
 **## Project Overview**
 
