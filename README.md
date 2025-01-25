@@ -29,7 +29,7 @@ This is the frontend of a full-stack application that provides real-time data vi
    - Displays real-time streamed random numbers using `Chart.js`.
 
 2. **Dynamic Table**:
-   - Shows stored numbers and records in a paginated, sortable table.
+   - Shows stored numbers and records in table format.
 
 3. **CRUD Interface**:
    - Allows users to perform CRUD operations on `backend_table.csv`.
@@ -47,13 +47,10 @@ This is the frontend of a full-stack application that provides real-time data vi
 4. **Concurrency Handling**:
    - Notifies users of conflicting or pending operations during simultaneous CRUD actions.
 
-5. **Recovery UI**:
-   - Option to restore data from the most recent backup file.
-
 ---
 
 **## Hosting**
-- Deployed on free platforms like Vercel or Netlify.
+- Deployed on free platforms like Vercel.
 
 ---
 
@@ -79,11 +76,6 @@ This is the frontend of a full-stack application that provides real-time data vi
 
 ---
 
-**## Deployment**
-- Hosted Frontend URL: `<Your Frontend URL>`
-
----
-
 **## Testing Instructions**
 1. **Login**:
    - Enter credentials and validate token-based authentication.
@@ -92,7 +84,7 @@ This is the frontend of a full-stack application that provides real-time data vi
    - Confirm real-time random number updates on the chart.
 
 3. **Dynamic Table**:
-   - Check for proper pagination, sorting, and data rendering.
+   - Check for proper data rendering.
 
 4. **CRUD Operations**:
    - Test Create, Read, Update, and Delete functionalities for `backend_table.csv`.
@@ -102,8 +94,5 @@ This is the frontend of a full-stack application that provides real-time data vi
 
 6. **Error Handling**:
    - Simulate errors and verify proper error messages are displayed.
-
-7. **Recovery**:
-   - Restore the data using the recovery option and validate integrity.
 
 ---
