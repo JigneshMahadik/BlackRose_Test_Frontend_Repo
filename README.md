@@ -1,3 +1,6 @@
+**## Hosted URL : **
+-https://black-rose-frontend.vercel.app/
+
 **## Project Overview**
 
 This is the frontend of a full-stack application that provides real-time data visualization and CRUD functionality. The application includes user authentication, a real-time interactive plot, and a CRUD interface for managing data stored on the backend.
