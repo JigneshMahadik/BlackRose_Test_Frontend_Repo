@@ -5,15 +5,16 @@ https://black-rose-frontend.vercel.app/
 
 This is the frontend of a full-stack application that provides real-time data visualization and CRUD functionality. The application includes user authentication, a real-time interactive plot, and a CRUD interface for managing data stored on the backend.
 
-**## Tech Stack**
+## Tech Stack
 
--React (Frontend Framework)
--Chart.js (Real-time data visualization)
--React Router (Routing)
--Axios (HTTP client)
--State management
--Tailwind CSS (Styling)
--Vercel (Hosting)
+- **React** (Frontend Framework)
+- **Chart.js** (Real-time data visualization)
+- **React Router** (Routing)
+- **Axios** (HTTP client)
+- **State Management** (e.g., Redux, Context API)
+- **Tailwind CSS** (Styling)
+- **Vercel** (Hosting)
+
 
 **## Core Features**
 
