@@ -45,7 +45,7 @@ const RandomNumberGenerator = () => {
         const { random_number, timestamp } = data;
 
         // Update state with new data
-        setRandomNumber(`Random Number: ${random_number} at ${timestamp}`);
+        setRandomNumber(`Stock price: ${random_number} at ${timestamp}`);
         setDataPoints((prev) => [...prev, random_number]);
         setDataIndices((prev) => [...prev, prev.length]);
       }
@@ -67,7 +67,7 @@ const RandomNumberGenerator = () => {
     labels: dataIndices,
     datasets: [
       {
-        label: "Random Numbers",
+        label: "Stock Prices",
         data: dataPoints,
         borderColor: "rgb(75, 192, 192)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -78,13 +78,13 @@ const RandomNumberGenerator = () => {
   const options = {
     responsive: true,
     plugins: {
-      title: { display: true, text: "Live Random Number Chart" },
+      title: { display: true, text: "Stock Price Chart" },
     },
   };
 
   return (
     <div>
-      <h1>Random Number Generator</h1>
+      <h1>Tata Technologies - Stock</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <Line data={data} options={options} />
       <br></br>
